@@ -148,18 +148,27 @@ function navegar(id) {
 // AUTENTICAÇÃO GOOGLE
 function loginGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(res => {
-        db.collection("usuarios").doc(res.user.uid).get().then(doc => {
-            if (doc.exists) { 
-                entrar(res.user); 
-            } else { 
-                document.getElementById('btn-login-main').style.display = 'none';
-                document.getElementById('cadastro-form').style.display = 'block';
-            }
-        });
-    }).catch(err => alert("Erro ao logar: " + err.message));
-}
+    
+    // Força o uso do idioma do navegador
+    firebase.auth().useDeviceLanguage();
 
+    auth.signInWithPopup(provider)
+        .then(res => {
+            console.log("Sucesso!", res.user);
+            db.collection("usuarios").doc(res.user.uid).get().then(doc => {
+                if (doc.exists) { 
+                    entrar(res.user); 
+                } else { 
+                    document.getElementById('btn-login-main').style.display = 'none';
+                    document.getElementById('cadastro-form').style.display = 'block';
+                }
+            });
+        })
+        .catch(err => {
+            console.error("Erro detalhado:", err);
+            alert("Erro ao logar: " + err.message);
+        });
+}
 function salvarPerfil() {
     const nome = document.getElementById('reg-nome').value;
     const tel = document.getElementById('reg-tel').value;
@@ -275,4 +284,5 @@ window.onload = () => {
 </body>
 
 </html>
+
 
