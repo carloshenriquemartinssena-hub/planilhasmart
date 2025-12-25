@@ -41,11 +41,12 @@ function verificarUsuario(user) {
             // Chame sua função de carregar dashboard aqui
             // carregarDados(); 
         } else {
-            document.getElementById('btn-login-main').style.display = 'none';
-            document.getElementById('cadastro-form').style.display = 'block';
+            document.getElementById('').style.display = 'none';
+            document.getElementById('').style.display = 'block';
         }
     });
 }
 
 // Para garantir que o script carregou
 console.log("Smart Finance: app.js carregado com sucesso!");
+
