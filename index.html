@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Finance Ultra Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- <div id="login-overlay" class="overlay">
+        <div class="login-box">
+            <h2 id="login-title">Smart Finance Pro</h2>
+            <p id="login-desc">Sincronize com o Google para salvar por anos.</p>
+            <button onclick="loginGoogle()" class="btn-google" id="btn-login-main">Entrar com Google</button>
+            
+            <div id="cadastro-form" style="display:none; margin-top:20px; text-align: left;">
+                <label>Nome Completo*</label><input type="text" id="reg-nome">
+                <label>Telefone*</label><input type="tel" id="reg-tel">
+                <label>Apelido (Pop-ups)</label><input type="text" id="reg-apelido">
+                <button onclick="salvarPerfil()" class="btn-add" style="margin-top:15px">Finalizar Cadastro</button>
+            </div>
+        </div>
+    </div> -->
+
+    <nav class="sidebar">
+        <div class="logo">SMART FINANCE</div>
+        <ul class="nav-links">
+            <li class="active" onclick="navegar('dash')">📊 Dashboard</li>
+            <li onclick="navegar('analise')">📈 Análise Detalhada</li>
+            <li onclick="navegar('config')">⚙️ Configurações</li>
+            <li onclick="navegar('faq')">❓ FAQ</li>
+        </ul>
+        <div class="popup-control">
+            <label><input type="checkbox" id="popup-check" checked> Social Pop-ups</label>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="sec-dash">
+            <header class="hero-banner">
+                <h1 id="welcome-text">Bem-vindo!</h1>
+                <p id="ai-insight">Dica: Reduza gastos no Crédito para atingir sua meta mais rápido.</p>
+            </header>
+
+            <div class="metrics-bar">
+                <div class="metric"><h4>Saldo Real</h4><span id="bal-total">R$ 0,00</span></div>
+                <div class="metric"><h4>Entradas</h4><span id="bal-in" class="text-success">R$ 0,00</span></div>
+                <div class="metric"><h4>Saídas</h4><span id="bal-out" class="text-danger">R$ 0,00</span></div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="column">
+                    <div class="card">
+                        <h3>Diversificação</h3>
+                        <div class="chart-container"><canvas id="mainChart"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <h3>Extrato</h3>
+                        <div class="table-container">
+                            <table id="table-extrato"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h3>Nova Transação</h3>
+                        <form id="finance-form" class="smart-form">
+                            <input type="text" id="f-desc" placeholder="Descrição" required>
+                            <input type="number" id="f-val" placeholder="R$ Valor" step="0.01" required>
+                            <select id="f-method">
+                                <option>Dinheiro/Pix</option>
+                                <option>Débito</option>
+                                <option>Crédito</option>
+                            </select>
+                            <select id="f-type">
+                                <option value="in">Entrada</option>
+                                <option value="out" selected>Saída</option>
+                            </select>
+                            <input type="date" id="f-date" required>
+                            <button type="submit" class="btn-add">Salvar no Google</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-analise" style="display:none">
+            <div class="card">
+                <h2>📈 Análise Mensal Detalhada</h2>
+                <div class="analysis-split">
+                    <div class="text-success"><h3>Boas Práticas</h3><ul id="list-boas"></ul></div>
+                    <div class="text-danger"><h3>Más Práticas</h3><ul id="list-mas"></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-config" style="display:none">
+            <div class="card">
+                <h2>⚙️ Configurações</h2>
+                <p>E-mail: <span id="user-mail-display">...</span></p>
+                <button onclick="excluirConta()" class="btn-delete">Excluir Conta Permanentemente</button>
+            </div>
+        </section>
+
+        <section id="sec-faq" style="display:none">
+            <div class="card">
+                <h2>❓ FAQ</h2>
+                <p><strong>Como meus dados são salvos?</strong><br>Usamos o Google Firestore para manter seus dados seguros.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="social-toast" class="toast">Fulano atingiu um objetivo! 🎉</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
